@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import { register } from 'redux/User/user-operations.js';
 import shortid from 'shortid';
+import s from './Register.module.css';
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -43,57 +46,46 @@ export default function Register() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor={nameInputId}>
-        Name
-        <input
-          //   className={s.input}
-          type="text"
-          name="name"
-          value={name}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          onChange={handleChange}
-          id={nameInputId}
-        />
-      </label>
-      <label
-        //   className={s.label}
-        htmlFor={passwordInputId}
-      >
-        Password
-        <input
-          //   className={s.input}
-          type="password"
-          name="password"
-          value={password}
-          required
-          onChange={handleChange}
-          id={passwordInputId}
-        />
-      </label>
-      <label
-        //   className={s.label}
-        htmlFor={emailInputId}
-      >
-        Email
-        <input
-          //   className={s.input}
-          type="email"
-          name="email"
-          value={email}
-          required
-          onChange={handleChange}
-          id={emailInputId}
-        />
-      </label>
-      <button
-        //   className={s.button}
-        type="submit"
-      >
+      <ul>
+        <li className={s.listItem}>
+          <TextField
+            id={nameInputId}
+            label="Name"
+            type="name"
+            name="name"
+            value={name}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            onChange={handleChange}
+          />
+        </li>
+        <li className={s.listItem}>
+          <TextField
+            id={emailInputId}
+            label="Email"
+            type="email"
+            name="email"
+            value={email}
+            required
+            onChange={handleChange}
+          />
+        </li>
+        <li className={s.listItem}>
+          <TextField
+            id={passwordInputId}
+            label="Password"
+            type="password"
+            name="password"
+            value={password}
+            required
+            onChange={handleChange}
+          />
+        </li>
+      </ul>
+      <Button variant="contained" size="medium" type="submit">
         Register
-      </button>
+      </Button>
     </form>
   );
 }
-//   className={s.input}

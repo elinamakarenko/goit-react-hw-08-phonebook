@@ -5,6 +5,7 @@ import AppBar from './AppBar';
 import ContactsView from '../pages/ContactsView';
 import Register from 'pages/Register';
 import Login from 'pages/Login';
+import Animations from './Animations';
 import { fetchCurrentUser } from 'redux/User/user-operations';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
@@ -20,7 +21,7 @@ export default function App() {
   }, [dispatch]);
 
   return isFetchingCurrentUser ? (
-    <h1>загружаем...</h1>
+    <Animations />
   ) : (
     <Routes>
       <Route path="/" element={<AppBar />}>

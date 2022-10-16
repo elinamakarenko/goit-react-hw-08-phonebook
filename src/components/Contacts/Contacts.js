@@ -1,23 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import s from './Contacts.module.css';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Contacts({ contacts, onClick }) {
   return (
-    <ul>
+    <List>
       {contacts.map(({ id, name, number }) => (
-        <li className={s.contactsItem} key={id}>
+        <ListItem key={id}>
           {name}: {number}
-          <button
-            className={s.button}
-            type="button"
-            onClick={() => onClick(id)}
-          >
-            Delete
-          </button>
-        </li>
+          <Tooltip title="Delete">
+            <IconButton onClick={() => onClick(id)}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </ListItem>
       ))}
-    </ul>
+    </List>
   );
 }
 

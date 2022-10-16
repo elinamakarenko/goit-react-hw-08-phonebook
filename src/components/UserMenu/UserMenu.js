@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import Button from '@mui/material/Button';
 import { logOut } from 'redux/User/user-operations';
 import { getUsername } from 'redux/User/user-selectors';
 
@@ -8,13 +9,15 @@ export default function UserMenu() {
 
   return (
     <div>
-      <span>
-        Добро пожаловать,
-        {name}
-      </span>
-      <button type="button" onClick={() => dispatch(logOut())}>
-        Выйти
-      </button>
+      <span>Добро пожаловать, </span>
+      <span>{name} </span>
+      <Button
+        variant="outlined"
+        size="small"
+        onClick={() => dispatch(logOut())}
+      >
+        LogOut
+      </Button>
     </div>
   );
 }

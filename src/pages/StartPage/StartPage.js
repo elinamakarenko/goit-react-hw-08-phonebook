@@ -1,3 +1,8 @@
 export function StartPage() {
-  return <h1>Hello World!</h1>;
+  return (
+    <>
+      <h1>Hello!</h1>
+      <h3>Please, login or register</h3>
+    </>
+  );
 }

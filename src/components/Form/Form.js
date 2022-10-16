@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import { addContact } from 'redux/Contacts/contacts-operations';
 import shortid from 'shortid';
 import s from './Form.module.css';
@@ -37,38 +39,38 @@ export default function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label className={s.label} htmlFor={nameInputId}>
-        Name
-        <input
-          className={s.input}
-          type="text"
-          name="name"
-          value={name}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          onChange={handleChange}
-          id={nameInputId}
-        />
-      </label>
-      <label className={s.label} htmlFor={numberInputId}>
-        Phone
-        <input
-          className={s.input}
-          type="tel"
-          name="number"
-          value={number}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-          onChange={handleChange}
-          id={numberInputId}
-        />
-      </label>
-      <button className={s.button} type="submit">
+    <form onSubmit={handleSubmit} className={s.form}>
+      <ul>
+        <li className={s.listItem}>
+          <TextField
+            id={nameInputId}
+            label="Name"
+            type="text"
+            name="name"
+            value={name}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            onChange={handleChange}
+          />
+        </li>
+        <li className={s.listItem}>
+          <TextField
+            id={numberInputId}
+            label="Number"
+            type="tel"
+            name="number"
+            value={number}
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            onChange={handleChange}
+          />
+        </li>
+      </ul>
+      <Button variant="contained" size="medium" type="submit">
         Add contact
-      </button>
+      </Button>
     </form>
   );
 }

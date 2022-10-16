@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import { login } from 'redux/User/user-operations';
 import shortid from 'shortid';
+import s from './Login.module.css';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -38,43 +41,33 @@ export default function Login() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label
-        //   className={s.label}
-        htmlFor={emailInputId}
-      >
-        Email
-        <input
-          //   className={s.input}
-          type="email"
-          name="email"
-          value={email}
-          required
-          onChange={handleChange}
-          id={emailInputId}
-        />
-      </label>
-      <label
-        //   className={s.label}
-        htmlFor={passwordInputId}
-      >
-        Password
-        <input
-          //   className={s.input}
-          type="password"
-          name="password"
-          value={password}
-          required
-          onChange={handleChange}
-          id={passwordInputId}
-        />
-      </label>
-
-      <button
-        //   className={s.button}
-        type="submit"
-      >
+      <ul>
+        <li className={s.listItem}>
+          <TextField
+            id={emailInputId}
+            label="Email"
+            type="email"
+            name="email"
+            value={email}
+            required
+            onChange={handleChange}
+          />
+        </li>
+        <li className={s.listItem}>
+          <TextField
+            id={passwordInputId}
+            label="Password"
+            type="password"
+            name="password"
+            value={password}
+            required
+            onChange={handleChange}
+          />
+        </li>
+      </ul>
+      <Button variant="contained" size="medium" type="submit">
         Login
-      </button>
+      </Button>
     </form>
   );
 }
