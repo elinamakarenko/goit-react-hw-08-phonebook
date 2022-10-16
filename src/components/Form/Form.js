@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/Contacts/contacts-operations';
 import shortid from 'shortid';
-import PropTypes from 'prop-types';
 import s from './Form.module.css';
 
-export default function Form({ onSubmit }) {
+export default function Form() {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const nameInputId = shortid.generate();
   const numberInputId = shortid.generate();
 
@@ -15,8 +17,8 @@ export default function Form({ onSubmit }) {
       case 'name':
         setName(value);
         break;
-      case 'phone':
-        setPhone(value);
+      case 'number':
+        setNumber(value);
         break;
       default:
         return;
@@ -25,13 +27,13 @@ export default function Form({ onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit({ name, phone });
+    dispatch(addContact({ name, number }));
     reset();
   };
 
   const reset = () => {
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -55,8 +57,8 @@ export default function Form({ onSubmit }) {
         <input
           className={s.input}
           type="tel"
-          name="phone"
-          value={phone}
+          name="number"
+          value={number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
@@ -70,7 +72,3 @@ export default function Form({ onSubmit }) {
     </form>
   );
 }
-
-Form.propTypes = {
-  onSubmit: PropTypes.func,
-};

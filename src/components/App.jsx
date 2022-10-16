@@ -1,57 +1,41 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Form from './Form/Form';
-import Contacts from './Contacts';
-import Filter from './Filter';
-import { filterContacts } from '../redux/contacts-actions';
-import {
-  fetchContacts,
-  addContact,
-  deleteContact,
-} from 'redux/contacts-operations';
-import { getContacts, getFilter } from 'redux/contacts-selectors';
+import { Route, Routes } from 'react-router-dom';
+import AppBar from './AppBar';
+import ContactsView from '../pages/ContactsView';
+import Register from 'pages/Register';
+import Login from 'pages/Login';
+import { fetchCurrentUser } from 'redux/User/user-operations';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+import { getIsFetchingCurrent } from 'redux/User/user-selectors';
+import { StartPage } from 'pages/StartPage/StartPage';
 
 export default function App() {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
+  const isFetchingCurrentUser = useSelector(getIsFetchingCurrent);
+
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(fetchCurrentUser());
   }, [dispatch]);
-  const formSubmit = payload => {
-    const { name } = payload;
-    if (contacts.find(contact => contact.name === name)) {
-      alert(`${name} is already in contacts!`);
-      return contacts;
-    } else {
-      return dispatch(addContact(payload));
-    }
-  };
 
-  const changeFilter = event => {
-    dispatch(filterContacts(event.currentTarget.value));
-  };
-
-  const findContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
-  const onClick = contactId => {
-    dispatch(deleteContact(contactId));
-  };
-
-  return (
-    <>
-      <h1>Phonebook</h1>
-      <Form onSubmit={formSubmit} />
-      <h2>Contacts</h2>
-      <Filter value={filter} onChange={changeFilter} />
-      {contacts.length > 0 && (
-        <Contacts contacts={findContacts()} onClick={onClick} />
-      )}
-    </>
+  return isFetchingCurrentUser ? (
+    <h1>загружаем...</h1>
+  ) : (
+    <Routes>
+      <Route path="/" element={<AppBar />}>
+        <Route index element={<StartPage />} />
+        <Route element={<PublicRoute />}>
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<Login />} />{' '}
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/contacts" element={<ContactsView />} />
+        </Route>
+        <Route path="*" element={<Login />} />
+      </Route>
+    </Routes>
   );
 }

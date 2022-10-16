@@ -5,9 +5,9 @@ import s from './Contacts.module.css';
 function Contacts({ contacts, onClick }) {
   return (
     <ul>
-      {contacts.map(({ id, name, phone }) => (
+      {contacts.map(({ id, name, number }) => (
         <li className={s.contactsItem} key={id}>
-          {name}: {phone}
+          {name}: {number}
           <button
             className={s.button}
             type="button"

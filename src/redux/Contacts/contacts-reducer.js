@@ -27,11 +27,12 @@ const contactsSlice = createSlice({
       state.error = payload;
       state.isLoading = false;
     },
-    [addContact.pending]: (state, { payload }) => {
+    [addContact.pending]: (state, _) => {
       state.isLoading = true;
       state.error = null;
     },
     [addContact.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       state.items.push(payload);
       state.isLoading = false;
       state.error = null;
