@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import {
   persistStore,
@@ -19,13 +19,21 @@ const userPersistConfig = {
   storage,
   whitelist: ['token'],
 };
+const appReducer = combineReducers({
+  user: persistReducer(userPersistConfig, userReducer),
+  contacts: contactsReducer,
+  filter: filter,
+});
+
+const rootReducer = (state, action) => {
+  if (action.type === 'user/logout/fulfilled') {
+    return appReducer(undefined, action);
+  }
+  return appReducer(state, action);
+};
 
 export const store = configureStore({
-  reducer: {
-    user: persistReducer(userPersistConfig, userReducer),
-    contacts: contactsReducer,
-    filter: filter,
-  },
+  reducer: rootReducer,
   middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware({
       serializableCheck: {
